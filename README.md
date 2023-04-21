@@ -4,7 +4,7 @@ This Python script renames video files in subdirectories named `Season XX` to th
 
 ## Requirements
 
-- Python 3
+- Python 3 (only tested on python 3.11.0)
 - natsort package
 
 ```bash
@@ -15,7 +15,7 @@ pip install natsort
 
 1. Clone the repository or download the script `jellyfin_rename.py`.
 2. Open a command prompt or terminal in the directory containing the script.
-3. Run the script by typing `python jellyfin_rename.py`.
+3. Run the script by typing `python jellyfin_rename.py` or `python3 jellyfin_rename.py` depending on how your python is set up.
 4. Enter the folder path to work in when prompted, or leave it blank for the current directory.
 5. Enter the file extension to filter by when prompted, or leave it blank for `.mkv`.
 6. The script will display the old and new filenames for each video file to be renamed, sorted by season and episode number. Confirm whether you want to proceed with renaming the files for each season.
