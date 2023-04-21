@@ -13,7 +13,7 @@ pip install natsort
 
 ## Usage
 
-1. Clone the repository or download the script `jellyfin_rename.py`.
+1. Clone the repository, download the script `jellyfin_rename.py` or download the newest release.
 2. Open a command prompt or terminal in the directory containing the script.
 3. Run the script by typing `python jellyfin_rename.py` or `python3 jellyfin_rename.py` depending on how your python is set up.
 4. Enter the folder path to work in when prompted, or leave it blank for the current directory.
