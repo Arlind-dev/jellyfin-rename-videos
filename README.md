@@ -4,6 +4,19 @@ This Python script renames video files in subdirectories named `Season YY` to th
 
 ## Requirements
 
+- Folders that have videos in them which are already sorted the correct way: ex.
+```
+jellyfin_rename_videos/
+├── Season 01/
+│   ├── video1.mkv
+│   ├── video2.mkv
+│   └── video3.mkv
+└── Season 02/
+    ├── video4.mkv
+    ├── video5.mkv
+    └── video6.mkv
+```
+
 - Python 3 (only tested on python 3.11.0)
 - natsort package
 
@@ -25,7 +38,7 @@ pip install natsort
 
 Suppose you have the following folder structure:
 
-```bash
+```
 jellyfin_rename_videos/
 ├── Season 01/
 │   ├── video1.mkv
@@ -60,7 +73,7 @@ All files renamed.
 ```
 After confirming that you want to proceed with renaming the files for each season, the script will rename the files as follows:
 
-```bash
+```
 jellyfin_rename_videos/
 ├── Season 01/
 │   ├── SE01EP01.mkv
