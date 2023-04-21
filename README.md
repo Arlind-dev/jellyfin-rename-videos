@@ -1,6 +1,6 @@
 # Jellyfin Rename Videos
 
-This Python script renames video files in subdirectories named `Season XX` to the format `SE(XX)E(YY).(ext)`, where "XX" is the season number and "YY" is the episode number, sorted naturally.
+This Python script renames video files in subdirectories named `Season YY` to the format `SEYYEPXX.ext`, where "YY" is the season number and "XX" is the episode number, sorted naturally.
 
 ## Requirements
 
