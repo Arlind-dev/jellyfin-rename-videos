@@ -1,4 +1,4 @@
-# Version: 1.0.1
+# Version: 1.0.0
 # Author: Arlind-dev
 # Python 3.11.0
 
