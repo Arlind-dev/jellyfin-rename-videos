@@ -1,4 +1,4 @@
-# Version: 1.0.0
+# Version: 1.0.1
 # Author: Arlind-dev
 # Python 3.11.0
 
@@ -44,10 +44,16 @@ for season_dir in season_dirs:
     nkey = natsort_keygen()
     files = sorted([f for f in os.listdir(season_dir_path) if f.lower().endswith("." + file_ext.lower())], key=nkey)
 
+    # Check if the number of files is a three-digit number
+    if len(files) > 99:
+        new_file_ext = f"SE{season_number:02d}EP{{:03d}}.{file_ext}"
+    else:
+        new_file_ext = f"SE{season_number:02d}EP{{:02d}}.{file_ext}"
+
     # Show the user the new filenames
     for i, filename in enumerate(files, start=1):
         old_path = os.path.join(season_dir_path, filename)
-        new_filename = f"SE{season_number:02d}EP{i:02d}.{file_ext}"
+        new_filename = new_file_ext.format(i)
         new_path = os.path.join(season_dir_path, new_filename)
         rel_old_path = os.path.relpath(old_path, start=folder_path)
         rel_new_path = os.path.relpath(new_path, start=folder_path)
@@ -62,10 +68,8 @@ for season_dir in season_dirs:
     # Rename the files according to the specified naming convention
     for i, filename in enumerate(files, start=1):
         old_path = os.path.join(season_dir_path, filename)
-        new_filename = f"SE{season_number:02d}EP{i:02d}.{file_ext}"
+        new_filename = new_file_ext.format(i)
         new_path = os.path.join(season_dir_path, new_filename)
         os.rename(old_path, new_path)
-
-    print(f"Done renaming files in {season_dir}.")
 
 print("done")
