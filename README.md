@@ -69,7 +69,7 @@ Done renaming files in Season 01.
 Do you want to proceed with renaming the files in Season 02? (y/n):
 Done renaming files in Season 02.
 
-All files renamed.
+Done.
 ```
 After confirming that you want to proceed with renaming the files for each season, the script will rename the files as follows:
 
