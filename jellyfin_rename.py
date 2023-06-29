@@ -79,4 +79,4 @@ for season_dir in season_dirs:
         new_path = os.path.join(season_dir_path, new_filename)
         os.rename(old_path, new_path)
 
-print("Done")
+print("Done.")
