@@ -1,4 +1,4 @@
-# Version: 1.0.1
+# Version: 1.0.2
 # Author: Arlind-dev
 # Python 3.11.0
 
@@ -51,6 +51,7 @@ for season_dir in season_dirs:
         new_file_ext = f"SE{season_number:02d}EP{{:02d}}.{file_ext}"
 
     # Show the user the new filenames
+    renamed = False
     for i, filename in enumerate(files, start=1):
         old_path = os.path.join(season_dir_path, filename)
         new_filename = new_file_ext.format(i)
@@ -58,6 +59,12 @@ for season_dir in season_dirs:
         rel_old_path = os.path.relpath(old_path, start=folder_path)
         rel_new_path = os.path.relpath(new_path, start=folder_path)
         print(f".{os.path.sep}{rel_old_path} --> .{os.path.sep}{rel_new_path}")
+        if filename != new_filename:
+            renamed = True
+
+    if not renamed:
+        print(f"Episodes in {season_dir} are already in the correct naming scheme.")
+        continue
 
     # Ask the user if they want to proceed with renaming the files
     confirmationRename = input(f"Do you want to proceed with renaming the files in {season_dir}? (y/n): ").strip().lower() or "y"
@@ -72,4 +79,4 @@ for season_dir in season_dirs:
         new_path = os.path.join(season_dir_path, new_filename)
         os.rename(old_path, new_path)
 
-print("done")
+print("Done")
