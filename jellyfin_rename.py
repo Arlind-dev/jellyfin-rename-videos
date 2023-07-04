@@ -1,4 +1,4 @@
-# Version: 1.0.2
+# Version: 1.0.3
 # Author: Arlind-dev
 # Python 3.11.0
 
@@ -28,7 +28,11 @@ if not file_ext:
     file_ext = "mkv"
 
 # Create a list of all subdirectories containing "Season" in their name
-season_dirs = [d for d in os.listdir(folder_path) if os.path.isdir(os.path.join(folder_path, d)) and "Season" in d]
+season_dirs = [
+    d
+    for d in os.listdir(folder_path)
+    if os.path.isdir(os.path.join(folder_path, d)) and "Season" in d
+]
 
 # Iterate through each season directory
 for season_dir in season_dirs:
@@ -42,7 +46,14 @@ for season_dir in season_dirs:
     # List the files in the season directory with the specified extension, sorted naturally
     season_dir_path = os.path.join(folder_path, season_dir)
     nkey = natsort_keygen()
-    files = sorted([f for f in os.listdir(season_dir_path) if f.lower().endswith("." + file_ext.lower())], key=nkey)
+    files = sorted(
+        [
+            f
+            for f in os.listdir(season_dir_path)
+            if f.lower().endswith("." + file_ext.lower())
+        ],
+        key=nkey,
+    )
 
     # Check if the number of files is a three-digit number
     if len(files) > 99:
@@ -67,7 +78,14 @@ for season_dir in season_dirs:
         continue
 
     # Ask the user if they want to proceed with renaming the files
-    confirmationRename = input(f"Do you want to proceed with renaming the files in {season_dir}? (y/n): ").strip().lower() or "y"
+    confirmationRename = (
+        input(
+            f"Do you want to proceed with renaming the files in {season_dir}? (y/n): "
+        )
+        .strip()
+        .lower()
+        or "y"
+    )
     if confirmationRename != "y":
         print(f"File renaming cancelled for {season_dir}.")
         continue
