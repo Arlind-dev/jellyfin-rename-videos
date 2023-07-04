@@ -17,7 +17,7 @@ This Python script renames video files in subdirectories named `Season YY` to th
     └── video6.mkv
 ```
 
-- Python 3 (only tested on python 3.11.0)
+- Python 3 (Tested on 3.8.12, 3.11.0)
 - natsort package
 
 ```bash
