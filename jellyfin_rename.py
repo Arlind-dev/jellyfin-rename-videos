@@ -1,7 +1,3 @@
-# Version: 1.0.3
-# Author: Arlind-dev
-# Python 3.11.0
-
 import os
 from natsort import natsort_keygen
 
@@ -20,19 +16,26 @@ if not os.path.exists(folder_path):
     print(f"The folder {folder_path} does not exist.")
     exit()
 
-# Ask the user for a file extension to filter by
-file_ext = input("Enter a file extension (default is mkv): ")
-
-# Set default value to mkv if the user does not enter a value
-if not file_ext:
-    file_ext = "mkv"
-
 # Create a list of all subdirectories containing "Season" in their name
 season_dirs = [
     d
     for d in os.listdir(folder_path)
     if os.path.isdir(os.path.join(folder_path, d)) and "Season" in d
 ]
+
+# Check if there are any season directories
+if not season_dirs:
+    print("No 'Season' directory found.")
+    print("For more information check out the README")
+    print("https://github.com/Arlind-dev/jellyfin-rename-videos/tree/main#requirements")
+    exit()
+
+# Ask the user for a file extension to filter by
+file_ext = input("Enter a file extension (default is mkv): ")
+
+# Set default value to mkv if the user does not enter a value
+if not file_ext:
+    file_ext = "mkv"
 
 # Iterate through each season directory
 for season_dir in season_dirs:
@@ -41,6 +44,7 @@ for season_dir in season_dirs:
         season_number = int(season_number_str)
     except ValueError:
         print(f"Invalid season number: {season_number_str}")
+        print("'Season' directory can only contain 2 Digits (00-99)")
         continue
 
     # List the files in the season directory with the specified extension, sorted naturally
