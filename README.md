@@ -6,7 +6,7 @@ This Python script renames video files in subdirectories named `Season YY` to th
 
 - Folders that have videos in them which are already sorted the correct way: ex.
 ```
-jellyfin_rename_videos/
+.
 ├── Season 01/
 │   ├── video1.mkv
 │   ├── video2.mkv
@@ -39,7 +39,7 @@ pip install natsort
 Suppose you have the following folder structure:
 
 ```
-jellyfin_rename_videos/
+.
 ├── Season 01/
 │   ├── video1.mkv
 │   ├── video2.mkv
@@ -53,28 +53,25 @@ jellyfin_rename_videos/
 You run the script by typing `python jellyfin_rename_videos.py`, and enter `mkv` (or leave it blank) for the file extension. The script will display the following:
 
 ```
-Enter a folder path (default is current directory):
-
+Enter a directory path (default is current directory):
 Enter a file extension (default is mkv):
 
-./Season 01/video1.mkv --> ./Season 01/SE01EP01.mkv
-./Season 01/video2.mkv --> ./Season 01/SE01EP02.mkv
-./Season 01/video3.mkv --> ./Season 01/SE01EP03.mkv
+.\Season 01\video1.mkv   -->     .\Season 01\SE01EP01.mkv
+.\Season 01\video2.mkv   -->     .\Season 01\SE01EP02.mkv
+.\Season 01\video3.mkv   -->     .\Season 01\SE01EP03.mkv
 Do you want to proceed with renaming the files in Season 01? (y/n):
-Done renaming files in Season 01.
 
-./Season 02/video4.mkv --> ./Season 02/SE02EP01.mkv
-./Season 02/video5.mkv --> ./Season 02/SE02EP02.mkv
-./Season 02/video6.mkv --> ./Season 02/SE02EP03.mkv
+.\Season 02\video4.mkv   -->     .\Season 02\SE02EP01.mkv
+.\Season 02\video5.mkv   -->     .\Season 02\SE02EP02.mkv
+.\Season 02\video6.mkv   -->     .\Season 02\SE02EP03.mkv
 Do you want to proceed with renaming the files in Season 02? (y/n):
-Done renaming files in Season 02.
 
-All files renamed.
+Done.
 ```
 After confirming that you want to proceed with renaming the files for each season, the script will rename the files as follows:
 
 ```
-jellyfin_rename_videos/
+.
 ├── Season 01/
 │   ├── SE01EP01.mkv
 │   ├── SE01EP02.mkv
