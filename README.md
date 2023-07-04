@@ -1,6 +1,6 @@
 # Jellyfin Rename Videos
 
-This Python script renames video files in subdirectories named `Season YY` to the format `SEYYEPXX.ext`, where "YY" is the season number and "XX" is the episode number, sorted naturally.
+This Python script renames video files in subdirectories named `Season YY` to the format `SYYEXX.ext`, where "YY" is the season number and "XX" is the episode number, sorted naturally.
 
 ## Requirements
 
@@ -17,7 +17,7 @@ This Python script renames video files in subdirectories named `Season YY` to th
     └── video6.mkv
 ```
 
-- Python 3 (only tested on python 3.11.0)
+- Python 3 (Tested on 3.8.12, 3.11.0)
 - natsort package
 
 ```bash
@@ -56,14 +56,14 @@ You run the script by typing `python jellyfin_rename_videos.py`, and enter `mkv`
 Enter a directory path (default is current directory):
 Enter a file extension (default is mkv):
 
-.\Season 01\video1.mkv   -->     .\Season 01\SE01EP01.mkv
-.\Season 01\video2.mkv   -->     .\Season 01\SE01EP02.mkv
-.\Season 01\video3.mkv   -->     .\Season 01\SE01EP03.mkv
+.\Season 01\video1.mkv   -->     .\Season 01\S01E01.mkv
+.\Season 01\video2.mkv   -->     .\Season 01\S01E02.mkv
+.\Season 01\video3.mkv   -->     .\Season 01\S01E03.mkv
 Do you want to proceed with renaming the files in Season 01? (y/n):
 
-.\Season 02\video4.mkv   -->     .\Season 02\SE02EP01.mkv
-.\Season 02\video5.mkv   -->     .\Season 02\SE02EP02.mkv
-.\Season 02\video6.mkv   -->     .\Season 02\SE02EP03.mkv
+.\Season 02\video4.mkv   -->     .\Season 02\S02E01.mkv
+.\Season 02\video5.mkv   -->     .\Season 02\S02E02.mkv
+.\Season 02\video6.mkv   -->     .\Season 02\S02E03.mkv
 Do you want to proceed with renaming the files in Season 02? (y/n):
 
 Done.
@@ -73,13 +73,13 @@ After confirming that you want to proceed with renaming the files for each seaso
 ```
 .
 ├── Season 01/
-│   ├── SE01EP01.mkv
-│   ├── SE01EP02.mkv
-│   └── SE01EP03.mkv
+│   ├── S01E01.mkv
+│   ├── S01E02.mkv
+│   └── S01E03.mkv
 └── Season 02/
-    ├── SE02EP01.mkv
-    ├── SE02EP02.mkv
-    └── SE02EP03.mkv
+    ├── S02E01.mkv
+    ├── S02E02.mkv
+    └── S02E03.mkv
 ```
 
 ## Contributions

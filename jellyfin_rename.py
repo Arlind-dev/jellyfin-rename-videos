@@ -1,4 +1,4 @@
-# Version: 1.0.3
+# Version: 1.0.4
 # Contributors: Arlind-dev
 # Python 3.11.0
 
@@ -67,9 +67,9 @@ for season_directory in season_directories:
 
     # Check if the number of files is a three-digit number
     if len(files) > 99:
-        new_file_ext = f"SE{season_number:02d}EP{{:03d}}.{file_ext}"
+        new_file_ext = f"S{season_number:02d}E{{:03d}}.{file_ext}"
     else:
-        new_file_ext = f"SE{season_number:02d}EP{{:02d}}.{file_ext}"
+        new_file_ext = f"S{season_number:02d}E{{:02d}}.{file_ext}"
 
     # Show the user the new filenames
     renamed = False
