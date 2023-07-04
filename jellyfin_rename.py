@@ -1,3 +1,7 @@
+# Version: 1.0.3
+# Contributors: Arlind-dev
+# Python 3.11.0
+
 import os
 from natsort import natsort_keygen
 
