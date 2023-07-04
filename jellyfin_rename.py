@@ -1,30 +1,30 @@
 import os
 from natsort import natsort_keygen
 
-# Ask the user for a folder path to work in
-folder_path = input("Enter a folder path (default is current directory): ")
+# Ask the user for a directory path to work in
+directory_path = input("Enter a directory path (default is current directory): ")
 
 # Check if the user entered a value or not
-if not folder_path:
-    folder_path = "."  # Set default value to current directory
+if not directory_path:
+    directory_path = "."  # Set default value to current directory
 
-# Resolve the folder path to an absolute path using os.path.abspath()
-folder_path = os.path.abspath(folder_path)
+# Resolve the directory path to an absolute path using os.path.abspath()
+directory_path = os.path.abspath(directory_path)
 
-# Check if the folder exists
-if not os.path.exists(folder_path):
-    print(f"The folder {folder_path} does not exist.")
+# Check if the directory exists
+if not os.path.exists(directory_path):
+    print(f"The directory {directory_path} does not exist.")
     exit()
 
 # Create a list of all subdirectories containing "Season" in their name
-season_dirs = [
+season_directories = [
     d
-    for d in os.listdir(folder_path)
-    if os.path.isdir(os.path.join(folder_path, d)) and "Season" in d
+    for d in os.listdir(directory_path)
+    if os.path.isdir(os.path.join(directory_path, d)) and "Season" in d
 ]
 
 # Check if there are any season directories
-if not season_dirs:
+if not season_directories:
     print("No 'Season' directory found.")
     print("For more information check out the README")
     print("https://github.com/Arlind-dev/jellyfin-rename-videos/tree/main#requirements")
@@ -38,8 +38,8 @@ if not file_ext:
     file_ext = "mkv"
 
 # Iterate through each season directory
-for season_dir in season_dirs:
-    season_number_str = season_dir.split()[-1]
+for season_directory in season_directories:
+    season_number_str = season_directory.split()[-1]
     try:
         season_number = int(season_number_str)
     except ValueError:
@@ -47,13 +47,15 @@ for season_dir in season_dirs:
         print("'Season' directory can only contain 2 Digits (00-99)")
         continue
 
+    print("")
+
     # List the files in the season directory with the specified extension, sorted naturally
-    season_dir_path = os.path.join(folder_path, season_dir)
+    season_directory_path = os.path.join(directory_path, season_directory)
     nkey = natsort_keygen()
     files = sorted(
         [
             f
-            for f in os.listdir(season_dir_path)
+            for f in os.listdir(season_directory_path)
             if f.lower().endswith("." + file_ext.lower())
         ],
         key=nkey,
@@ -68,37 +70,38 @@ for season_dir in season_dirs:
     # Show the user the new filenames
     renamed = False
     for i, filename in enumerate(files, start=1):
-        old_path = os.path.join(season_dir_path, filename)
+        old_path = os.path.join(season_directory_path, filename)
         new_filename = new_file_ext.format(i)
-        new_path = os.path.join(season_dir_path, new_filename)
-        rel_old_path = os.path.relpath(old_path, start=folder_path)
-        rel_new_path = os.path.relpath(new_path, start=folder_path)
-        print(f".{os.path.sep}{rel_old_path} --> .{os.path.sep}{rel_new_path}")
+        new_path = os.path.join(season_directory_path, new_filename)
+        rel_old_path = os.path.relpath(old_path, start=directory_path)
+        rel_new_path = os.path.relpath(new_path, start=directory_path)
+        print(f".{os.path.sep}{rel_old_path}\t -->\t .{os.path.sep}{rel_new_path}")
         if filename != new_filename:
             renamed = True
 
     if not renamed:
-        print(f"Episodes in {season_dir} are already in the correct naming scheme.")
+        print(f"Episodes in {season_directory} dont need to be renamed.")
         continue
 
     # Ask the user if they want to proceed with renaming the files
     confirmationRename = (
         input(
-            f"Do you want to proceed with renaming the files in {season_dir}? (y/n): "
+            f"Do you want to proceed with renaming the files in {season_directory}? (y/n): "
         )
         .strip()
         .lower()
         or "y"
     )
     if confirmationRename != "y":
-        print(f"File renaming cancelled for {season_dir}.")
+        print(f"File renaming cancelled for {season_directory}.")
         continue
-
+        print("")
     # Rename the files according to the specified naming convention
     for i, filename in enumerate(files, start=1):
-        old_path = os.path.join(season_dir_path, filename)
+        old_path = os.path.join(season_directory_path, filename)
         new_filename = new_file_ext.format(i)
-        new_path = os.path.join(season_dir_path, new_filename)
+        new_path = os.path.join(season_directory_path, new_filename)
         os.rename(old_path, new_path)
 
+print("")
 print("Done.")
