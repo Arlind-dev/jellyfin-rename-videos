@@ -3,7 +3,6 @@
 
 import os
 import argparse
-from natsort import natsort_keygen
 from tabulate import tabulate
 
 
