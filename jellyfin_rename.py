@@ -81,8 +81,10 @@ def rename_file_extension(directory_path, season_directory, file_ext):
     renamed_files = []
 
     for filename in files:
-        new_filename = filename.lower()
-        if new_filename != filename:
+        file_name_without_ext, file_extension = os.path.splitext(filename)
+        new_file_extension = file_extension.lower()
+        if new_file_extension != file_extension:
+            new_filename = file_name_without_ext + new_file_extension
             old_path = os.path.join(season_directory_path, filename)
             new_path = os.path.join(season_directory_path, new_filename)
             os.rename(old_path, new_path)
@@ -109,8 +111,9 @@ def list_files_in_season_directory(season_directory_path, file_ext):
     return files
 
 
-def construct_new_file_extension(season_number, num_digits, file_ext):
+def construct_new_file_extension(season_number, num_files, file_ext):
     # Construct the new file extension format based on the season number and the number of files
+    num_digits = len(str(num_files))
     season_number_str = str(season_number).zfill(2)
     new_file_ext = f"S{season_number_str}E{{:0{num_digits}d}}.{file_ext}"
     return new_file_ext
