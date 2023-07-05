@@ -1,23 +1,48 @@
-# Version: 2.0.0
+# Version: 2.0.1
 # Contributors: Arlind-dev
 
 import os
+import argparse
 from natsort import natsort_keygen
 from tabulate import tabulate
+
+
+def validate_directory_path(directory_path):
+    # Validate the directory path
+    if not directory_path:
+        directory_path = "."  # Set the default value to current directory
+    if os.path.exists(directory_path):
+        return True
+    else:
+        print("Invalid directory path. Please try again.")
+        return False
+
+
+def validate_file_extension(file_ext):
+    # Validate the file extension
+    if file_ext.isalnum():
+        return True
+    else:
+        print("Invalid file extension. Only letters and numbers are allowed.")
+        return False
 
 
 def get_directory_path():
     # Prompt the user to enter a directory path
     while True:
-        directory_path = input(
-            "Enter a directory path (default is current directory): "
+        directory_path = (
+            input("Enter a directory path (default is current directory): ") or "."
         )
-        if not directory_path:
-            directory_path = "."  # Set the default value to current directory
-        if os.path.exists(directory_path):
+        if validate_directory_path(directory_path):
             return directory_path
-        else:
-            print("Invalid directory path. Please try again.")
+
+
+def get_file_extension():
+    # Prompt the user to enter a file extension
+    while True:
+        file_ext = input("Enter a file extension (default is mkv): ") or "mkv"
+        if validate_file_extension(file_ext):
+            return file_ext
 
 
 def get_season_directories(directory_path):
@@ -38,17 +63,6 @@ def print_season_directory_not_found_message():
     )
 
 
-def get_file_extension():
-    # Prompt the user to enter a file extension
-    while True:
-        file_ext = input("Enter a file extension (default is mkv): ") or "mkv"
-
-        if file_ext.isalnum():
-            return file_ext
-        else:
-            print("Invalid file extension. Only letters and numbers are allowed.")
-
-
 def get_season_number(season_directory):
     # Extract the season number from the 'Season' directory name
     try:
@@ -58,18 +72,6 @@ def get_season_number(season_directory):
         print(f"Invalid season: '{season_directory}'")
         print("'Season' directory must contain a valid integer season number.")
         return None
-
-
-def list_files_in_season_directory(season_directory_path, file_ext):
-    # List the files with the given file extension in the 'Season' directory
-    files = sorted(
-        [
-            f
-            for f in os.listdir(season_directory_path)
-            if f.lower().endswith("." + file_ext.lower())
-        ]
-    )
-    return files
 
 
 def rename_file_extension(directory_path, season_directory, file_ext):
@@ -93,6 +95,18 @@ def rename_file_extension(directory_path, season_directory, file_ext):
         print(
             f"Made file extensions lowercase in the directory: .{os.sep}{rel_directory_path}"
         )
+
+
+def list_files_in_season_directory(season_directory_path, file_ext):
+    # List the files with the given file extension in the 'Season' directory
+    files = sorted(
+        [
+            f
+            for f in os.listdir(season_directory_path)
+            if f.lower().endswith("." + file_ext.lower())
+        ]
+    )
+    return files
 
 
 def construct_new_file_extension(season_number, num_digits, file_ext):
@@ -134,15 +148,48 @@ def rename_files(directory_path, season_info):
 
 
 def main():
-    # Main function to execute the file renaming process
-    directory_path = get_directory_path()
+    # Parse command-line arguments
+    parser = argparse.ArgumentParser(
+        formatter_class=argparse.RawDescriptionHelpFormatter
+    )
+    parser.add_argument("-d", "--directory", help="Specify the directory to process")
+    parser.add_argument(
+        "-e", "--extension", help="Specify the file extension to process"
+    )
+    args = parser.parse_args()
+
+    directory_path_validated = False
+    file_extension_validated = False
+
+    # Get directory path from command-line argument or prompt the user
+    if args.directory:
+        directory_path_validated = True
+        directory_path = args.directory
+        if not validate_directory_path(directory_path):
+            return
+
+    # Get file extension from command-line argument or prompt the user
+    if args.extension:
+        file_extension_validated = True
+        file_ext = args.extension
+        if not validate_file_extension(file_ext):
+            return
+
+    if not directory_path_validated:
+        directory_path = get_directory_path()
+        if not validate_directory_path(directory_path):
+            return
+
+    if not file_extension_validated:
+        file_ext = get_file_extension()
+        if not validate_file_extension(file_ext):
+            return
+
     season_directories = get_season_directories(directory_path)
 
     if not season_directories:
         print_season_directory_not_found_message()
         return
-
-    file_ext = get_file_extension()
 
     for season_directory in season_directories:
         rename_file_extension(directory_path, season_directory, file_ext)
