@@ -26,6 +26,32 @@ pip install natsort
 pip install tabulate
 ```
 
+## Arguments
+
+| Shorted argument | Full argument | Instructions                            |
+| ---------------- | ------------- | --------------------------------------- |
+| -h               | --help        | show this help message and exit         |
+| -d               | --directory   | Inputs the directory to the script      |
+| -e               | --extension   | Inputs the file extension to the script |
+
+### Examples
+
+#### Both arguments
+
+```bash
+python jellyfin_rename.py -e mp4 -d /path/to/directory
+```
+
+#### One argument
+
+```bash
+python jellyfin_rename.py -d /path/to/directory # you will need to input the file extension in the script
+```
+
+```bash
+python jellyfin_rename.py -e mkv # you will need to input the directory in the script
+```
+
 ## Usage
 
 1. Clone the repository, download the script `jellyfin_rename.py` or download the newest release.
@@ -35,6 +61,12 @@ pip install tabulate
 5. Enter the file extension to filter by when prompted, or leave it blank for `.mkv`.
 6. The script will display the old and new filenames for each video file to be renamed, sorted by season and episode number. Confirm whether you want to proceed with renaming the files for each season.
 7. The script will rename the files according to the specified naming convention.
+
+You can also skip the folder path and file extension input by putting in the necessary arguments!
+
+```bash
+python jellyfin_rename.py -e mkv -d /path/to/directory
+```
 
 ## Example
 
