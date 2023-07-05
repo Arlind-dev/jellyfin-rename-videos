@@ -3,7 +3,7 @@
 
 import os
 import argparse
-from natsort import natsort_keygen
+from natsort import natsorted
 from tabulate import tabulate
 
 
@@ -101,7 +101,7 @@ def rename_file_extension(directory_path, season_directory, file_ext):
 
 def list_files_in_season_directory(season_directory_path, file_ext):
     # List the files with the given file extension in the 'Season' directory
-    files = sorted(
+    files = natsorted(
         [
             f
             for f in os.listdir(season_directory_path)
