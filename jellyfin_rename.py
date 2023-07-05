@@ -149,9 +149,13 @@ def rename_files(directory_path, season_info):
 
 def main():
     # Parse command-line arguments
-    parser = argparse.ArgumentParser()
-    parser.add_argument("-d", "--directory", help="Directory path")
-    parser.add_argument("-e", "--extension", help="File extension")
+    parser = argparse.ArgumentParser(
+        formatter_class=argparse.RawDescriptionHelpFormatter
+    )
+    parser.add_argument("-d", "--directory", help="Specify the directory to process")
+    parser.add_argument(
+        "-e", "--extension", help="Specify the file extension to process"
+    )
     args = parser.parse_args()
 
     directory_path_validated = False
