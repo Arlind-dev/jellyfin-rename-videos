@@ -14,7 +14,7 @@ def validate_directory_path(directory_path):
     if os.path.exists(directory_path):
         return True
     else:
-        print("Invalid directory path. Please try again.")
+        print("Invalid directory path. That directory does not exist.")
         return False
 
 
@@ -166,17 +166,15 @@ def main():
 
     # Get directory path from command-line argument or prompt the user
     if args.directory:
-        directory_path_validated = True
         directory_path = args.directory
-        if not validate_directory_path(directory_path):
-            return
+        if validate_directory_path(directory_path):
+            directory_path_validated = True
 
     # Get file extension from command-line argument or prompt the user
     if args.extension:
-        file_extension_validated = True
         file_ext = args.extension
-        if not validate_file_extension(file_ext):
-            return
+        if validate_file_extension(file_ext):
+            file_extension_validated = True
 
     if not directory_path_validated:
         directory_path = get_directory_path()
