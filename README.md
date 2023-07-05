@@ -22,6 +22,7 @@ This Python script renames video files in subdirectories named `Season YY` to th
 - tabulate package
 
 ```bash
+pip install natsort
 pip install tabulate
 ```
 
