@@ -7,9 +7,6 @@ from natsort import natsort_keygen
 from tabulate import tabulate
 
 
-import os
-
-
 def validate_directory_path(directory_path):
     # Validate the directory path
     if not directory_path:
