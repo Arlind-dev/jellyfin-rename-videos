@@ -38,7 +38,7 @@ if not season_directories:
 # Ask the user for a file extension to filter by
 file_ext = input("Enter a file extension (default is mkv): ")
 
-# Set default value to mkv if the user does not enter a value
+# Set the default value to mkv if the user does not enter a value
 if not file_ext:
     file_ext = "mkv"
 
