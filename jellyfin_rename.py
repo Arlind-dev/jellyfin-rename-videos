@@ -30,8 +30,8 @@ def validate_file_extension(file_ext):
 def get_directory_path():
     # Prompt the user to enter a directory path
     while True:
-        directory_path = input(
-            "Enter a directory path (default is current directory): "
+        directory_path = (
+            input("Enter a directory path (default is current directory): ") or "."
         )
         if validate_directory_path(directory_path):
             return directory_path
