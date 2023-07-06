@@ -3,8 +3,14 @@
 
 import os
 import argparse
+import signal
 from natsort import natsorted
 from tabulate import tabulate
+
+
+def handle_keyboard_interrupt(signal, frame):
+    print("\n\nKeyboardInterrupt detected. Exiting gracefully...")
+    exit()
 
 
 def validate_directory_path(directory_path):
@@ -151,6 +157,8 @@ def rename_files(directory_path, season_info):
 
 
 def main():
+    # Add this line to register the signal handler
+    signal.signal(signal.SIGINT, handle_keyboard_interrupt)
     # Parse command-line arguments
     parser = argparse.ArgumentParser(
         formatter_class=argparse.RawDescriptionHelpFormatter
