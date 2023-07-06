@@ -9,7 +9,7 @@ from tabulate import tabulate
 
 
 def handle_keyboard_interrupt(signal, frame):
-    print("\n\nKeyboardInterrupt detected. Exiting gracefully...")
+    print("\n\nExiting gracefully...")
     exit()
 
 
