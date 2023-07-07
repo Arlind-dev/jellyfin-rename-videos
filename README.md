@@ -56,7 +56,12 @@ python jellyfin_rename.py -e mkv # you will need to input the directory in the s
 
 1. Clone the repository, download the script `jellyfin_rename.py` or download the newest release.
 2. Open a command prompt or terminal in the directory containing the script.
-3. Run the script by typing `python jellyfin_rename.py` or `python3 jellyfin_rename.py` depending on how your python is set up.
+3. Run the script by typing this command.
+
+```bash
+python jellyfin_rename.py
+```
+
 4. Enter the folder path to work in when prompted, or leave it blank for the current directory.
 5. Enter the file extension to filter by when prompted, or leave it blank for `.mkv`.
 6. The script will display the old and new filenames for each video file to be renamed, sorted by season and episode number. Confirm whether you want to proceed with renaming the files for each season.
