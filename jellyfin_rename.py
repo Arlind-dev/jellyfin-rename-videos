@@ -80,6 +80,22 @@ def get_season_number(season_directory):
         return None
 
 
+def get_confirmation_rename(season_directory):
+    while True:
+        confirmation_rename = (
+            input(
+                f"Do you want to proceed with renaming the files in {season_directory}? (y/n, default value is y): "
+            )
+            .strip()
+            .lower()
+        ) or "y"
+
+        if confirmation_rename in ("y", "n"):
+            return confirmation_rename
+        else:
+            print("Invalid input. Please enter 'y' or 'n'.")
+
+
 def rename_file_extension(directory_path, season_directory, file_ext):
     # Rename the file extension of the files in the 'Season' directory to lowercase
     season_directory_path = os.path.join(directory_path, season_directory)
@@ -225,20 +241,19 @@ def main():
             )
         )
 
-        confirmation_rename = (
-            input(
-                f"Do you want to proceed with renaming the files in {season_directory}? (y/n): "
-            )
-            .strip()
-            .lower()
-            or "y"
-        )
+        valid_input = False
+        while not valid_input:
+            confirmation_rename = get_confirmation_rename(season_directory)
 
-        if confirmation_rename != "y":
-            print(f"File renaming cancelled for {season_directory}.")
-            continue
+            if confirmation_rename == "n":
+                print(f"File renaming cancelled for {season_directory}.")
+                break
+            elif confirmation_rename == "y":
+                print(f"Renaming Files in {season_directory}.")
+                valid_input = True
 
-        rename_files(directory_path, season_info)
+        if valid_input:
+            rename_files(directory_path, season_info)
 
     print("\nDone.")
 
