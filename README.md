@@ -89,7 +89,13 @@ Suppose you have the following folder structure:
     └── video6.mkv
 ```
 
-You run the script by typing `python jellyfin_rename_videos.py`, and enter `mkv` (or leave it blank) for the file extension. The script will display the following:
+You run the script by typing this command
+
+```bash
+python jellyfin_rename_videos.py
+```
+
+You may now add your directory path and file extension without a dot.
 
 ```
 Enter a directory path (default is current directory):
