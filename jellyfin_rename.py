@@ -134,8 +134,10 @@ def list_files_in_season_directory(season_directory_path, file_ext):
 
 
 def construct_new_file_extension(season_number, num_files, file_ext):
+    # Determine the number of digits needed for the episode number
+    num_digits = max(2, len(str(num_files)))
+
     # Construct the new file extension format based on the season number and the number of files
-    num_digits = len(str(num_files))
     season_number_str = str(season_number).zfill(2)
     new_file_ext = f"S{season_number_str}E{{:0{num_digits}d}}.{file_ext}"
     return new_file_ext
