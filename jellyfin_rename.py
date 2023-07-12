@@ -1,10 +1,47 @@
-# Version: 2.0.1
 # Contributors: Arlind-dev
 
 import os
 import argparse
+import signal
+import requests
 from natsort import natsorted
 from tabulate import tabulate
+
+
+# Version information
+SCRIPT_VERSION = "2.0.2"
+
+
+def check_for_new_release(current_version):
+    # Check for a new release on the GitHub repository
+    releases_url = (
+        "https://api.github.com/repos/Arlind-dev/jellyfin-rename-videos/releases"
+    )
+    response = requests.get(releases_url)
+    if response.status_code == 200:
+        releases = response.json()
+        latest_release = releases[0]
+        latest_version = latest_release.get("tag_name")
+        if latest_version:
+            if current_version == latest_version:
+                print("You have the latest version.")
+            elif current_version > latest_version:
+                print(
+                    f"You are currently using a custom version or a beta release of the script.\nLatest release: {latest_version}"
+                )
+            else:
+                print(
+                    f"A new release '{latest_version}' is available. You can download it from: {latest_release.get('html_url')}"
+                )
+        else:
+            print("Failed to get the latest release.")
+    else:
+        print("Failed to check for new releases.")
+
+
+def handle_keyboard_interrupt(signal, frame):
+    print("\n\nExiting gracefully...")
+    exit()
 
 
 def validate_directory_path(directory_path):
@@ -14,7 +51,7 @@ def validate_directory_path(directory_path):
     if os.path.exists(directory_path):
         return True
     else:
-        print("Invalid directory path. Please try again.")
+        print("Invalid directory path. That directory does not exist.")
         return False
 
 
@@ -74,6 +111,22 @@ def get_season_number(season_directory):
         return None
 
 
+def get_confirmation_rename(season_directory):
+    while True:
+        confirmation_rename = (
+            input(
+                f"Do you want to proceed with renaming the files in {season_directory}? (y/n, default value is y): "
+            )
+            .strip()
+            .lower()
+        ) or "y"
+
+        if confirmation_rename in ("y", "n"):
+            return confirmation_rename
+        else:
+            print("Invalid input. Please enter 'y' or 'n'.")
+
+
 def rename_file_extension(directory_path, season_directory, file_ext):
     # Rename the file extension of the files in the 'Season' directory to lowercase
     season_directory_path = os.path.join(directory_path, season_directory)
@@ -112,8 +165,10 @@ def list_files_in_season_directory(season_directory_path, file_ext):
 
 
 def construct_new_file_extension(season_number, num_files, file_ext):
+    # Determine the number of digits needed for the episode number
+    num_digits = max(2, len(str(num_files)))
+
     # Construct the new file extension format based on the season number and the number of files
-    num_digits = len(str(num_files))
     season_number_str = str(season_number).zfill(2)
     new_file_ext = f"S{season_number_str}E{{:0{num_digits}d}}.{file_ext}"
     return new_file_ext
@@ -151,6 +206,8 @@ def rename_files(directory_path, season_info):
 
 
 def main():
+    # Add this line to register the signal handler
+    signal.signal(signal.SIGINT, handle_keyboard_interrupt)
     # Parse command-line arguments
     parser = argparse.ArgumentParser(
         formatter_class=argparse.RawDescriptionHelpFormatter
@@ -159,24 +216,36 @@ def main():
     parser.add_argument(
         "-e", "--extension", help="Specify the file extension to process"
     )
+    parser.add_argument(
+        "-nuc",
+        "--no-update-check",
+        action="store_false",
+        help="Disable checking for a new release",
+    )
     args = parser.parse_args()
 
     directory_path_validated = False
     file_extension_validated = False
 
+    # If arg --no-update-check=true don't check version of the script
+    if args.no_update_check:
+        if SCRIPT_VERSION:
+            print(f"Script Version: {SCRIPT_VERSION}")
+            check_for_new_release(SCRIPT_VERSION)
+        else:
+            print("Failed to get the current version.")
+
     # Get directory path from command-line argument or prompt the user
     if args.directory:
-        directory_path_validated = True
         directory_path = args.directory
-        if not validate_directory_path(directory_path):
-            return
+        if validate_directory_path(directory_path):
+            directory_path_validated = True
 
     # Get file extension from command-line argument or prompt the user
     if args.extension:
-        file_extension_validated = True
         file_ext = args.extension
-        if not validate_file_extension(file_ext):
-            return
+        if validate_file_extension(file_ext):
+            file_extension_validated = True
 
     if not directory_path_validated:
         directory_path = get_directory_path()
@@ -219,20 +288,19 @@ def main():
             )
         )
 
-        confirmation_rename = (
-            input(
-                f"Do you want to proceed with renaming the files in {season_directory}? (y/n): "
-            )
-            .strip()
-            .lower()
-            or "y"
-        )
+        valid_input = False
+        while not valid_input:
+            confirmation_rename = get_confirmation_rename(season_directory)
 
-        if confirmation_rename != "y":
-            print(f"File renaming cancelled for {season_directory}.")
-            continue
+            if confirmation_rename == "n":
+                print(f"File renaming cancelled for {season_directory}.")
+                break
+            elif confirmation_rename == "y":
+                print(f"Renaming Files in {season_directory}.")
+                valid_input = True
 
-        rename_files(directory_path, season_info)
+        if valid_input:
+            rename_files(directory_path, season_info)
 
     print("\nDone.")
 

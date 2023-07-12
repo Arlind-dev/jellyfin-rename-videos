@@ -20,26 +20,29 @@ This Python script renames video files in subdirectories named `Season YY` to th
 - Python 3 (Tested on 3.8.12, 3.11.0)
 - natsort package
 - tabulate package
+- reqiest package
 
 ```bash
 pip install natsort
 pip install tabulate
+pip install requests
 ```
 
 ## Arguments
 
-| Shorted argument | Full argument | Instructions                            |
-| ---------------- | ------------- | --------------------------------------- |
-| -h               | --help        | show this help message and exit         |
-| -d               | --directory   | Inputs the directory to the script      |
-| -e               | --extension   | Inputs the file extension to the script |
+| Shorted argument | Full argument     | Instructions                            |
+| ---------------- | ----------------- | --------------------------------------- |
+| -h               | --help            | Show this help message and exit         |
+| -d               | --directory       | Inputs the directory to the script      |
+| -e               | --extension       | Inputs the file extension to the script |
+| -nuc             | --no-update-check | Disable checking for a new release      |
 
 ### Examples
 
 #### Both arguments
 
 ```bash
-python jellyfin_rename.py -e mp4 -d /path/to/directory
+python jellyfin_rename.py --extension mp4 --directory /path/to/directory --no-update-check
 ```
 
 #### One argument
@@ -56,7 +59,12 @@ python jellyfin_rename.py -e mkv # you will need to input the directory in the s
 
 1. Clone the repository, download the script `jellyfin_rename.py` or download the newest release.
 2. Open a command prompt or terminal in the directory containing the script.
-3. Run the script by typing `python jellyfin_rename.py` or `python3 jellyfin_rename.py` depending on how your python is set up.
+3. Run the script by typing this command.
+
+```bash
+python jellyfin_rename.py
+```
+
 4. Enter the folder path to work in when prompted, or leave it blank for the current directory.
 5. Enter the file extension to filter by when prompted, or leave it blank for `.mkv`.
 6. The script will display the old and new filenames for each video file to be renamed, sorted by season and episode number. Confirm whether you want to proceed with renaming the files for each season.
@@ -84,7 +92,13 @@ Suppose you have the following folder structure:
     └── video6.mkv
 ```
 
-You run the script by typing `python jellyfin_rename_videos.py`, and enter `mkv` (or leave it blank) for the file extension. The script will display the following:
+You run the script by typing this command
+
+```bash
+python jellyfin_rename_videos.py
+```
+
+You may now add your directory path and file extension without a dot.
 
 ```
 Enter a directory path (default is current directory):
