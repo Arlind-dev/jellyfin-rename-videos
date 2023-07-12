@@ -1,11 +1,42 @@
-# Version: 2.0.2
 # Contributors: Arlind-dev
 
 import os
 import argparse
 import signal
+import requests
 from natsort import natsorted
 from tabulate import tabulate
+
+
+# Version information
+SCRIPT_VERSION = "2.0.2"
+
+
+def check_for_new_release(current_version):
+    # Check for a new release on the GitHub repository
+    releases_url = (
+        "https://api.github.com/repos/Arlind-dev/jellyfin-rename-videos/releases"
+    )
+    response = requests.get(releases_url)
+    if response.status_code == 200:
+        releases = response.json()
+        latest_release = releases[0]
+        latest_version = latest_release.get("tag_name")
+        if latest_version:
+            if current_version == latest_version:
+                print("You have the latest version.")
+            elif current_version > latest_version:
+                print(
+                    f"You are currently using a custom version or a beta release of the script.\nLatest release: {latest_version}"
+                )
+            else:
+                print(
+                    f"A new release '{latest_version}' is available. You can download it from: {latest_release.get('html_url')}"
+                )
+        else:
+            print("Failed to get the latest release.")
+    else:
+        print("Failed to check for new releases.")
 
 
 def handle_keyboard_interrupt(signal, frame):
@@ -185,10 +216,24 @@ def main():
     parser.add_argument(
         "-e", "--extension", help="Specify the file extension to process"
     )
+    parser.add_argument(
+        "-nuc",
+        "--no-update-check",
+        action="store_false",
+        help="Disable checking for a new release",
+    )
     args = parser.parse_args()
 
     directory_path_validated = False
     file_extension_validated = False
+
+    # If arg --no-update-check=true don't check version of the script
+    if args.no_update_check:
+        if SCRIPT_VERSION:
+            print(f"Script Version: {SCRIPT_VERSION}")
+            check_for_new_release(SCRIPT_VERSION)
+        else:
+            print("Failed to get the current version.")
 
     # Get directory path from command-line argument or prompt the user
     if args.directory:

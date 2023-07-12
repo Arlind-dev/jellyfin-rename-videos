@@ -28,18 +28,19 @@ pip install tabulate
 
 ## Arguments
 
-| Shorted argument | Full argument | Instructions                            |
-| ---------------- | ------------- | --------------------------------------- |
-| -h               | --help        | show this help message and exit         |
-| -d               | --directory   | Inputs the directory to the script      |
-| -e               | --extension   | Inputs the file extension to the script |
+| Shorted argument | Full argument     | Instructions                            |
+| ---------------- | ----------------- | --------------------------------------- |
+| -h               | --help            | Show this help message and exit         |
+| -d               | --directory       | Inputs the directory to the script      |
+| -e               | --extension       | Inputs the file extension to the script |
+| -nuc             | --no-update-check | Disable checking for a new release      |
 
 ### Examples
 
 #### Both arguments
 
 ```bash
-python jellyfin_rename.py -e mp4 -d /path/to/directory
+python jellyfin_rename.py -e mp4 -d /path/to/directory --no-update-check
 ```
 
 #### One argument
