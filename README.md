@@ -20,10 +20,12 @@ This Python script renames video files in subdirectories named `Season YY` to th
 - Python 3 (Tested on 3.8.12, 3.11.0)
 - natsort package
 - tabulate package
+- reqiest package
 
 ```bash
 pip install natsort
 pip install tabulate
+pip install requests
 ```
 
 ## Arguments
@@ -40,7 +42,7 @@ pip install tabulate
 #### Both arguments
 
 ```bash
-python jellyfin_rename.py -e mp4 -d /path/to/directory --no-update-check
+python jellyfin_rename.py --extension mp4 --directory /path/to/directory --no-update-check
 ```
 
 #### One argument
